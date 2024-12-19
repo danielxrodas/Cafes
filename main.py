@@ -54,7 +54,7 @@ with app.app_context():
 def home():
     result = db.session.execute(db.select(Cafe).order_by(Cafe.name)) # Selecting the source but organizing the database by Cafe.name
     all_cafes = result.scalars().all() # Maintaining all the cafes
-    return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
+    return render_template("index.html", cafes=[cafe.to_dict() for cafe in all_cafes])
     
 
 # TODO: Build a route to ADD cafes
@@ -84,7 +84,7 @@ def create_new_cafe():
     
 
 # TODO: Route to DELETE cafes
-@app.route("/report-closed/<int:cafe_id", methods=["DELETE"])
+@app.route("/report-closed/<int:cafe_id>", methods=["DELETE"])  # Corrected
 def delete_cafe(cafe_id):
     api_key = request.args.get("api-key")
     if api_key == "SECRETAPI":
